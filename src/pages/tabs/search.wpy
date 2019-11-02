@@ -1,0 +1,22 @@
+<template>
+  <text>搜索</text>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class search extends wepy.page {
+    data = {}
+
+    config = {}
+
+    methods = {
+
+    }
+  }
+
+</script>
+
+<style lang='less'>
+
+</style>

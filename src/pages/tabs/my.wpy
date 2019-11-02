@@ -1,0 +1,22 @@
+<template>
+  <text>我的</text>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class my extends wepy.page {
+    data = {}
+
+    config = {}
+
+    methods = {
+
+    }
+  }
+
+</script>
+
+<style lang='less'>
+
+</style>

@@ -10,13 +10,16 @@
   export default class extends wepy.app {
     config = {
       pages: [
-        'pages/index'
+        'pages/tabs/home',
+        'pages/tabs/cart',
+        'pages/tabs/search',
+        'pages/tabs/my'
       ],
       window: {
         backgroundTextStyle: 'light',
-        navigationBarBackgroundColor: '#fff',
-        navigationBarTitleText: 'WeChat',
-        navigationBarTextStyle: 'black'
+        navigationBarBackgroundColor: '#FF0000',
+        navigationBarTitleText: '购物商城',
+        navigationBarTextStyle: 'white'
       }
     }
 
@@ -29,6 +32,7 @@
       this.use('requestfix')
     }
 
-    onLaunch() {
-    }
+    onLaunch() {}
+  }
+
 </script>
