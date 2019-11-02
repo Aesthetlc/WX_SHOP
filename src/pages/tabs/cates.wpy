@@ -1,0 +1,25 @@
+<template>
+    <text>分类</text>
+</template>
+
+<script>
+
+import wepy from 'wepy'
+
+export default class cates extends wepy.page {
+    data = {
+    }
+
+    config = {
+    }
+
+    methods = {
+
+    }
+}
+
+</script>
+
+<style lang='less'>
+
+</style>
