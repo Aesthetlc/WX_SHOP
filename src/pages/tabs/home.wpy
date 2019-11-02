@@ -6,12 +6,30 @@
   import wepy from 'wepy'
 
   export default class home extends wepy.page {
-    data = {}
+    data = {
+      swiperData:[] //轮播图数据
+    }
 
     config = {}
 
     methods = {
 
+    }
+
+    async getSwiperData(){
+     const {data} = await wepy.request({
+        url:"https://uinav.com/api/public/v1/home/swiperdata",
+      })
+      if(data.meta.status!==200){
+          return console.log("有错误，请查看");
+      }
+      this.swiperData = data.message
+      this.$apply()
+    }
+
+    onLoad(){
+      //页面初始化 调用获取首页轮播图的数据
+      this.getSwiperData()
     }
   }
 
