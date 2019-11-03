@@ -1,40 +1,87 @@
 <template>
-  <text>这是首页</text>
+  <view class="home">
+    <swiper circular indicator-dots>
+      <swiper-item wx:for="{{swiperData}}" wx:key="index">
+        <navigator url="{{item.navigator_url}}">
+          <image src="{{item.image_src}}"></image>
+        </navigator>
+      </swiper-item>
+    </swiper>
+
+    <view class="cates">
+      <navigator hover-class="none" wx:key="index" wx:for="{{catesData}}" url="/pages/tabs/cates" open-type="switchTab">
+        <image src="{{item.image_src}}"></image>
+      </navigator>
+    </view>
+
+    <view class="floor_view">
+      <view class="floor_item" wx:for="{{floorData}}" wx:key="index">
+        <image class="title_image" src="{{item.floor_title.image_src}}"></image>
+        <view class="content_image">
+          <navigator wx:for="{{item.product_list}}" wx:key="index" url="{{item.navigator_url}}">
+             <image src="{{item.image_src}}" style="width:{{item.image_width}}rpx"></image>
+          </navigator>
+        </view>
+      </view>
+    </view>
+
+  </view>
 </template>
 
 <script>
   import wepy from 'wepy'
-
+  import mixinsHome from '@/mixins/tabs/home'
   export default class home extends wepy.page {
-    data = {
-      swiperData:[] //轮播图数据
-    }
-
-    config = {}
-
-    methods = {
-
-    }
-
-    async getSwiperData(){
-     const {data} = await wepy.request({
-        url:"https://uinav.com/api/public/v1/home/swiperdata",
-      })
-      if(data.meta.status!==200){
-          return console.log("有错误，请查看");
-      }
-      this.swiperData = data.message
-      this.$apply()
-    }
-
-    onLoad(){
-      //页面初始化 调用获取首页轮播图的数据
-      this.getSwiperData()
-    }
+    mixins = [mixinsHome]
   }
 
 </script>
 
 <style lang='less'>
+  .home {
+    swiper {
+      height: 375rpx;
+
+      image,
+      navigator {
+        height: 100%;
+        width: 100%;
+      }
+    }
+
+    .cates {
+      display: flex;
+      justify-content: space-between;
+      padding: 40rpx;
+
+      image {
+        height: 140rpx;
+        width: 128rpx;
+      }
+    }
+
+    .floor_view {
+      .floor_item {
+        .title_image {
+          height: 50rpx;
+          width: 640rpx;
+        }
+
+        .content_image {
+          image {
+            float: left;
+            padding: 8rpx;
+            height: 190rpx;
+            width: 224rpx;
+          }
+
+          navigator:nth-child(1)  imagep{
+            height: 390rpx;
+          }
+        }
+      }
+    }
+
+  }
 
 </style>

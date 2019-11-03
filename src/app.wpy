@@ -5,6 +5,7 @@
 <script>
   import wepy from 'wepy'
   import 'wepy-async-function'
+  import '@/utils/index'
 
 
   export default class extends wepy.app {
@@ -14,7 +15,9 @@
         'pages/tabs/cates',
         'pages/tabs/cart',
         'pages/tabs/search',
-        'pages/tabs/my'
+        'pages/tabs/my',
+        'pages/goods_detail/index',
+        'pages/goods_list/index'
       ],
       window: {
         backgroundTextStyle: 'light',
