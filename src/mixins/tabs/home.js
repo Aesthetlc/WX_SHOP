@@ -10,7 +10,12 @@ export default class Home extends wepy.mixin {
   config = {}
 
   methods = {
-
+    // 跳转到商品详情
+    goGoodsList(url){
+      wepy.navigateTo({
+        url
+      })
+    }
   }
 
 
@@ -47,7 +52,6 @@ export default class Home extends wepy.mixin {
       return wepy.baseShowToast()
     }
     this.floorData = data.message
-    console.log(this.floorData);
     this.$apply()
   }
 

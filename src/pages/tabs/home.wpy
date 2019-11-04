@@ -18,9 +18,7 @@
       <view class="floor_item" wx:for="{{floorData}}" wx:key="index">
         <image class="title_image" src="{{item.floor_title.image_src}}"></image>
         <view class="content_image">
-          <navigator wx:for="{{item.product_list}}" wx:key="index" url="{{item.navigator_url}}">
-             <image src="{{item.image_src}}" style="width:{{item.image_width}}rpx"></image>
-          </navigator>
+          <image @tap="goGoodsList({{item.navigator_url}})" wx:for="{{item.product_list}}" wx:key="index" src="{{item.image_src}}" style="width:{{item.image_width}}rpx"></image>
         </view>
       </view>
     </view>
@@ -41,7 +39,6 @@
   .home {
     swiper {
       height: 375rpx;
-
       image,
       navigator {
         height: 100%;
@@ -53,20 +50,17 @@
       display: flex;
       justify-content: space-between;
       padding: 40rpx;
-
       image {
         height: 140rpx;
         width: 128rpx;
       }
     }
-
     .floor_view {
       .floor_item {
         .title_image {
           height: 50rpx;
           width: 640rpx;
         }
-
         .content_image {
           image {
             float: left;
@@ -74,8 +68,7 @@
             height: 190rpx;
             width: 224rpx;
           }
-
-          navigator:nth-child(1)  image{
+          image:nth-child(1){
             height: 390rpx;
           }
         }

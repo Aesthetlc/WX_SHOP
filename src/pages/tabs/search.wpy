@@ -1,22 +1,59 @@
 <template>
-  <text>搜索</text>
+  <van-search value="{{ value }}" placeholder="请输入搜索关键词" show-action bind:change="onChange" bind:search="onSearch"
+    bind:cancel="onCancel" />
+
+  <van-cell-group>
+    <van-cell url="/pages/goods_detail/index?goods_id={{item.goods_id}}" wx:for="{{searchList}}" wx:key="index"
+      title="{{item.goods_name}}" />
+  </van-cell-group>
+
+  <view class="search_box">
+    <view class="search_history">
+      <text class="search_text">搜索历史</text>
+      <van-icon @tap="deleteHistory" class="search_delete" name="delete" />
+    </view>
+    <view class="search_content">
+      <navigator wx:for="{{history}}" wx:key="index" url="/pages/goods_detail/index?keyWords={{item}}">
+        <van-tag class="search_tag" size="medium">{{item}}</van-tag>
+      </navigator>
+    </view>
+  </view>
+
+  </view>
+
+
+
 </template>
 
 <script>
   import wepy from 'wepy'
 
+  import mixinsSearch from '@/mixins/tabs/search'
   export default class search extends wepy.page {
-    data = {}
-
-    config = {}
-
-    methods = {
-
-    }
+    mixins = [mixinsSearch]
   }
 
 </script>
 
 <style lang='less'>
+  .search_history {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .search_text,
+  .search_delete {
+    font-size: 38rpx;
+    margin: 10rpx;
+  }
+
+  .search_content {
+    navigator {
+      float: left;
+      .search_tag {
+        margin: 10rpx
+      }
+    }
+  }
 
 </style>

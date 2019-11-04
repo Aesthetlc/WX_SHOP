@@ -1,25 +1,67 @@
 <template>
-    <text>分类</text>
+  <view class="cate_box">
+    <scroll-view class="left" scroll-y>
+      <van-sidebar active="{{ 0 }}" bind:change="onChange">
+        <van-sidebar-item title="{{item.cat_name}}" wx:for="{{cateList}}" wx:key="index" />
+      </van-sidebar>
+    </scroll-view>
+
+    <scroll-view class="right" scroll-y>
+      <view class="right_title" wx:for="{{secondCate}}" wx:key="index">
+        <text>/ {{item.cat_name}} /</text>
+        <van-grid column-num="3" border="{{ false }}">
+          <van-grid-item use-slot wx:for="{{ item.children }}" url="/pages/goods_list/index?cat_id={{item.cat_id}}"  wx:key="index">
+            <image class="right_image" src="{{ item.cat_icon }}" />
+            <text class="right_content">{{ item.cat_name }}</text>
+          </van-grid-item>
+        </van-grid>
+      </view>
+    </scroll-view>
+  </view>
+
 </template>
 
 <script>
+  import wepy from 'wepy'
 
-import wepy from 'wepy'
-
-export default class cates extends wepy.page {
-    data = {
-    }
-
-    config = {
-    }
-
-    methods = {
-
-    }
-}
+  import mixinsCates from '@/mixins/tabs/cates'
+  export default class cates extends wepy.page {
+    mixins = [mixinsCates]
+  }
 
 </script>
 
 <style lang='less'>
+  page {
+    height: 100%;
+  }
+
+  .cate_box {
+    display: flex;
+    height: 100%;
+
+    .left {
+      height: 100%;
+      width: 85px;
+    }
+
+    .right {
+      .right_title {
+        text-align: center;
+        padding: 8rpx;
+      }
+
+      .right_image {
+        height: 120rpx;
+        width: 120rpx;
+      }
+
+      .right_content {
+        font-size: 30rpx;
+        padding: 8rpx;
+        height: 40rpx;
+      }
+    }
+  }
 
 </style>

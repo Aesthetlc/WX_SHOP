@@ -19,43 +19,53 @@
         'pages/goods_detail/index',
         'pages/goods_list/index'
       ],
+      "usingComponents": {
+        "van-sidebar": "./components/vant/sidebar/index",
+        "van-sidebar-item": "./components/vant/sidebar-item/index",
+        "van-grid": "./components/vant/grid/index",
+        "van-grid-item": "./components/vant/grid-item/index",
+        "van-search": "./components/vant/search/index",
+        "van-cell": "./components/vant/cell/index",
+        "van-cell-group": "./components/vant/cell-group/index",
+        "van-icon": "./components/vant/icon/index",
+        "van-tag": "./components/vant/tag/index"
+      },
       window: {
         backgroundTextStyle: 'light',
         navigationBarBackgroundColor: '#FF0000',
         navigationBarTitleText: '购物商城',
         navigationBarTextStyle: 'white'
       },
-      tabBar:{
-        list:[
-          {
-            pagePath:"pages/tabs/home",
-            text:"首页",
-            iconPath:"./assets/icons/home.png",
-            selectedIconPath:"./assets/icons/home-active.png"
+      tabBar: {
+        list: [{
+            pagePath: "pages/tabs/home",
+            text: "首页",
+            iconPath: "./assets/icons/home.png",
+            selectedIconPath: "./assets/icons/home-active.png"
           },
           {
-            pagePath:"pages/tabs/cates",
-            text:"分类",
-            iconPath:"./assets/icons/cates.png",
-            selectedIconPath:"./assets/icons/cates-active.png"
+            pagePath: "pages/tabs/cates",
+            text: "分类",
+            iconPath: "./assets/icons/cates.png",
+            selectedIconPath: "./assets/icons/cates-active.png"
           },
           {
-            pagePath:"pages/tabs/search",
-            text:"搜索",
-            iconPath:"./assets/icons/search.png",
-            selectedIconPath:"./assets/icons/search-active.png"
+            pagePath: "pages/tabs/search",
+            text: "搜索",
+            iconPath: "./assets/icons/search.png",
+            selectedIconPath: "./assets/icons/search-active.png"
           },
           {
-            pagePath:"pages/tabs/cart",
-            text:"购物车",
-            iconPath:"./assets/icons/cart.png",
-            selectedIconPath:"./assets/icons/cart-active.png"
+            pagePath: "pages/tabs/cart",
+            text: "购物车",
+            iconPath: "./assets/icons/cart.png",
+            selectedIconPath: "./assets/icons/cart-active.png"
           },
           {
-            pagePath:"pages/tabs/my",
-            text:"我的",
-            iconPath:"./assets/icons/my.png",
-            selectedIconPath:"./assets/icons/my-active.png"
+            pagePath: "pages/tabs/my",
+            text: "我的",
+            iconPath: "./assets/icons/my.png",
+            selectedIconPath: "./assets/icons/my-active.png"
           }
         ]
       }
@@ -69,8 +79,37 @@
       super()
       this.use('requestfix')
       this.use('promisify')
-    }
+      // 拦截request请求
+      this.intercept('request', {
+        // 发出请求时的回调函数
+        config(p) {
+          // 对所有request请求中的OBJECT参数对象统一附加时间戳属性
+          // 必须返回OBJECT参数对象，否则无法发送请求到服务端
+          wepy.showLoading({
+            title: "正在拼命加载中"
+          })
+          return p;
+        },
 
+        // 请求成功后的回调函数
+        success(p) {
+          // 可以在这里对收到的响应数据对象进行加工处理
+          // 必须返回响应数据对象，否则后续无法对响应数据进行处理
+          return p;
+        },
+
+        //请求失败后的回调函数
+        fail(p) {
+          // 必须返回响应数据对象，否则后续无法对响应数据进行处理
+          return p;
+        },
+
+        // 请求完成时的回调函数(请求成功或失败都会被执行)
+        complete(p) {
+          wepy.hideLoading()
+        }
+      });
+    }
     onLaunch() {}
   }
 
