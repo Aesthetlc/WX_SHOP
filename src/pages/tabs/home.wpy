@@ -75,7 +75,7 @@
             width: 224rpx;
           }
 
-          navigator:nth-child(1)  imagep{
+          navigator:nth-child(1)  image{
             height: 390rpx;
           }
         }
