@@ -67,7 +67,6 @@ export default class index extends wepy.mixin {
         this.isMore=true
         this.getGoodsList(function(){
             wepy.stopPullDownRefresh()
-            console.log("关闭");
         })
        
     }
