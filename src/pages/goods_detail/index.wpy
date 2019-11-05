@@ -1,27 +1,199 @@
 <template>
-    <view>
-        详情
+  <view class="detail_swiper">
+    <swiper circular indicator-dots>
+      <swiper-item wx:for="{{goods_detail.pics}}" wx:key="index">
+        <image @tap="previewImg({{item.pics_big_url}})" class="swiper_image" src="{{item.pics_big_url}}"></image>
+      </swiper-item>
+    </swiper>
+
+    <view class="box1">
+      <view>
+        <text>￥{{goods_detail.goods_price}}</text>
+      </view>
+      <view class="product_title">
+        <view class="product_title_left">
+          <text>{{goods_detail.goods_name}}</text>
+        </view>
+        <view>
+          <view>
+            <van-icon name="star-o" />
+          </view>
+          <view>收藏</view>
+        </view>
+      </view>
+      <view>快递：免运费</view>
     </view>
+
+    <view class="line"></view>
+
+    <view class="box2">
+      <view>
+        <text>促销</text>
+        <text> 满1000减300元</text>
+      </view>
+      <view>
+        <text>已选</text>
+        <text> 黑色/M/1件</text>
+      </view>
+    </view>
+
+    <view class="line"></view>
+
+    <view @tap="checkAddress" class="box3">
+      <view>
+        <text>送至</text>
+        <text>{{formatAddress}}</text>
+      </view>
+      <van-icon name="arrow" />
+    </view>
+
+    <view class="line"></view>
+
+    <view class="box4">
+      <van-tabs active="{{ 0 }}" bind:change="onChange">
+        <van-tab title="图文详情">
+          <rich-text nodes="{{goods_detail.goods_introduce}}"></rich-text>
+        </van-tab>
+        <van-tab title="规格参数">
+          <view class="attrs" wx:for="{{ goods_detail.attrs }}" wx:key="index">
+            <text>{{item.attr_name}}</text>
+            <text>{{item.attr_value}}</text>
+          </view>
+        </van-tab>
+      </van-tabs>
+    </view>
+
+    <view class="box5">
+      <van-goods-action custom-class="shop_cat">
+        <van-goods-action-icon icon="chat-o" text="客服" open-type="contact" bind:click="onClickIcon" />
+        <van-goods-action-icon icon="cart-o" text="购物车" bind:click="onClickIcon" />
+        <van-goods-action-button text="加入购物车" type="warning" bind:click="onClickButton" />
+        <van-goods-action-button text="立即购买" bind:click="onClickButton" />
+      </van-goods-action>
+    </view>
+
+  </view>
 </template>
 
 <script>
+  import wepy from 'wepy'
 
-import wepy from 'wepy'
-
-export default class Home extends wepy.page {
-    data = {
-    }
-
+  import mixinsDetails from '@/mixins/goods_detail/index'
+  export default class index extends wepy.page {
+    mixins = [mixinsDetails]
     config = {
+      navigationBarTitleText: '商品详情'
     }
-
-    methods = {
-
-    }
-}
+  }
 
 </script>
 
 <style lang='less'>
+  .detail_swiper {
+    swiper {
+      height: 750rpx;
+
+      .swiper_image {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  .box1 {
+    >view:nth-child(1) {
+      margin-bottom: 10rpx;
+
+      text {
+        color: red;
+      }
+    }
+
+    >view:nth-child(2) {
+      padding: 10rpx;
+    }
+
+    >view:nth-child(3) {
+      padding: 10rpx;
+      color: black;
+      font-size: 30rpx;
+      font-weight: 700;
+    }
+
+    padding:20rpx;
+
+    .product_title {
+      display: flex;
+
+      >view:nth-child(1) {
+        width: 80%;
+      }
+
+      view:nth-child(2) {
+        text-align: center;
+        width: 100rpx;
+        border-left: 1px solid #ccc;
+      }
+    }
+  }
+
+  .box2 {
+    view {
+      margin: 20rpx;
+
+      text:nth-child(1) {
+        font-size: 30rpx;
+      }
+
+      text:nth-child(2) {
+        font-size: 30rpx;
+        color: #ccc;
+      }
+    }
+  }
+
+  .box3 {
+    padding: 0rpx 20rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    view {
+      font-size: 28rpx;
+      padding: 20rpx 0;
+
+      text:nth-child(2) {
+        margin-left: 10rpx;
+        color: #999;
+      }
+    }
+  }
+
+  .box4 {
+    margin-bottom: 100rpx;
+
+    .attrs {
+      display: flex;
+
+      text {
+        text-align: center;
+        width: 50%;
+        display: block;
+        padding: 20rpx;
+        border-bottom: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+      }
+    }
+  }
+
+  .shop_cat {
+    z-index: 99;
+  }
+
+  .line {
+    height: 15rpx;
+    width: 100%;
+    background-color: #ddd;
+  }
 
 </style>

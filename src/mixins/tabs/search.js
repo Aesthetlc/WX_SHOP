@@ -4,7 +4,7 @@ export default class Home extends wepy.mixin {
   data = {
     value: "", //搜索的关键词
     searchList: [], //所搜结果的集合
-    history: wepy.getStorageSync('history') || [] //搜索历史的数组
+    history: wepy.getStorageSync('history') || [], //搜索历史的数组
   }
 
   config = {}
@@ -37,16 +37,20 @@ export default class Home extends wepy.mixin {
       this.history = this.history.splice(0, 10)
       wepy.setStorageSync('history', this.history)
       wepy.navigateTo({
-        url: '/pages/goods_list/index?keyWords=' + this.history
+        url: '/pages/goods_list/index?keyWords=' + this.value
       })
-      this.value=""
-      this.searchList=[]; 
     },
 
     //删除history
     deleteHistory(){
       this.history=[]
       wepy.removeStorageSync('history')
+    },
+
+    //页面隐藏(离开)的时候清空
+    onhide(){
+      this.value=""
+      this.searchList=[]; 
     }
   }
 }

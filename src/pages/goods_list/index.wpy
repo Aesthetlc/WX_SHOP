@@ -1,25 +1,41 @@
 <template>
-    <view>列表</view>
+  <view>
+    <van-card 
+        custom-class="border_bottom" 
+        wx:for="{{goodsList}}" 
+        wx:key="index" 
+        num="{{item.goods_number}}" 
+        price="{{item.goods_price}}" 
+        title="{{item.goods_name}}" 
+        thumb="{{item.goods_small_logo || 'http://destiny001.gitee.io/image/none.png'}}" 
+        @tap="goGoodsDetail({{item.goods_id}})"/>
+    <view class="end" hidden="{{isMore}}">----没有更多了----</view>
+  </view>
+
+  
 </template>
 
 <script>
+  import wepy from 'wepy'
 
-import wepy from 'wepy'
-
-export default class Home extends wepy.page {
-    data = {
-    }
-
+  import mixinsList from '@/mixins/goods_list/index'
+  export default class index extends wepy.page {
+    mixins = [mixinsList]
     config = {
+      navigationBarTitleText: '商品列表'
     }
-
-    methods = {
-
-    }
-}
+  }
 
 </script>
 
 <style lang='less'>
-
+.border_bottom{
+    border-bottom:1px solid #ccc;
+}
+.end{
+    height:70rpx; 
+    line-height:70rpx; 
+    text-align:center;
+    border-top:1px solid #ccc;
+}
 </style>
