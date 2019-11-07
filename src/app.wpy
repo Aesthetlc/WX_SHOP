@@ -34,7 +34,11 @@
         "van-tabs": "./components/vant/tabs/index",
         "van-goods-action": "./components/vant/goods-action/index",
         "van-goods-action-icon": "./components/vant/goods-action-icon/index",
-        "van-goods-action-button": "./components/vant/goods-action-button/index"
+        "van-goods-action-button": "./components/vant/goods-action-button/index",
+        "van-stepper": "./components/vant/stepper/index",
+        "van-checkbox": "./components/vant/checkbox/index",
+        "van-swipe-cell": "./components/vant/swipe-cell/index",
+        "van-submit-bar": "./components/vant/submit-bar/index"
       },
       window: {
         backgroundTextStyle: 'light',
@@ -78,7 +82,81 @@
     }
 
     globalData = {
-      userInfo: null
+      //全局变量 购物车
+      cart: []
+    }
+
+    //全局的方法 添加到购物车
+    addToCart(goods) {
+      const index = this.globalData.cart.findIndex(item => {
+        return item.id == goods.goods_id
+      })
+      // 判断是否存 是的话新增，不是的话就count++
+      if (index == -1) {
+        const goodsObj = {
+          // 商品id
+          id: goods.goods_id,
+          // 商品名称
+          name: goods.goods_name,
+          // 商品价格
+          price: goods.goods_price,
+          // 商品数量
+          count: 1,
+          // 商品图片
+          pic: goods.goods_big_logo,
+          // 是否购买
+          isCheck: true
+        }
+        this.globalData.cart.push(goodsObj)
+      } else {
+        this.globalData.cart[index].count++
+      }
+      this.seaveCart()
+    }
+
+    //全局的方法 修改购物车的数量
+    updataToCart(id, count) {
+      // 判断是否存在
+      const index = this.globalData.cart.findIndex(item => {
+        return item.id === id
+      })
+      if (index !== -1) {
+        this.globalData.cart[index].count = count
+        this.seaveCart()
+      }
+    }
+
+    //全局的方法 修改购物车勾选的状态
+    updataToCheck(id, check) {
+      // 判断是否存在
+      const index = this.globalData.cart.findIndex(item => {
+        return item.id === id
+      })
+      if (index !== -1) {
+        this.globalData.cart[index].isCheck = check
+        this.seaveCart()
+      }
+    }
+
+    //全局的方法 删除购物车商品信息
+    deleteShopMsg(id) {
+      // 判断是否存在
+      const index = this.globalData.cart.findIndex(item => item.id === id)
+      this.globalData.cart.splice(index, 1)
+      this.seaveCart()
+    }
+
+    //全局的方法 全选
+    checkToAll(flag) {
+      this.globalData.cart.forEach(item => {
+        item.isCheck = flag
+      })
+      this.seaveCart()
+    }
+
+    // 本地化
+    seaveCart() {
+      wepy.setStorageSync('cart', this.globalData.cart)
     }
 
     constructor() {
@@ -116,7 +194,9 @@
         }
       });
     }
-    onLaunch() {}
+    onLaunch() {
+      this.globalData.cart = wepy.getStorageSync('cart') || []
+    }
   }
 
 </script>

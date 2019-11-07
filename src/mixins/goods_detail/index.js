@@ -29,6 +29,11 @@ export default class detail extends wepy.mixin {
       this.$apply()
       //存放至本地localstorage
       wepy.setStorageSync('address', this.address)
+    },
+    //添加商品到购物车
+    addToCart(goods){
+      this.$parent.addToCart(this.goods_detail)
+      wepy.baseShowToast('添加购物车成功','success')
     }
   }
 

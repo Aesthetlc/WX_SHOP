@@ -1,22 +1,108 @@
 <template>
-  <text>这是车</text>
+  <view class="cart">
+    <view class="empty" wx:if="{{isEmpty}}">
+      <image src="http://hbimg.b0.upaiyun.com/e1b1467beea0a9c7d6a56b32bac6d7e5dcd914f7c3e6-YTwUd6_fw658"></image>
+      <view>没有商品啊,车是空的！</view>
+    </view>
+
+    <view class="cart_list" wx:else>
+      <van-cell title="购物车信息" icon="cart-o" />
+
+      <van-swipe-cell right-width="{{ 65 }}" left-width="{{ 0.00000001 }}" wx:for="{{cart}}" wx:key="index">
+        <van-cell-group>
+          <van-card title="{{item.name}}">
+            <view slot="desc" class="desc">
+              <view class="price">￥{{item.price}}</view>
+              <view>
+                <van-stepper value="{{item.count}}" bind:change="onChangeCount" data-id="{{item.id}}" />
+              </view>
+            </view>
+
+            <view slot="thumb" class="thumb">
+              <van-checkbox class="checked" value="{{item.isCheck}}" bind:change="onChangeCheck" data-id="{{item.id}}">
+              </van-checkbox>
+              <image
+                src="{{item.pic || 'http://hbimg.b0.upaiyun.com/bdaca9a07e1a8947c00c2f826ebf848750927aa24963-cATwbg_fw658'}}">
+              </image>
+            </view>
+          </van-card>
+        </van-cell-group>
+        <view slot="right" class="deleteShopMsg" @tap="deleteShopMsg({{item.id}})">删除</view>
+      </van-swipe-cell>
+    </view>
+    <van-submit-bar price="{{ sumPrice }}" button-text="提交订单" bind:submit="onClickButton">
+      <van-checkbox custom-class="checkAll" value="{{ isFullCheck }}" bind:change="onChangeAllCheck">全选</van-checkbox>
+    </van-submit-bar>
+  </view>
 </template>
 
 <script>
   import wepy from 'wepy'
-
+  import mixinsCat from '@/mixins/tabs/cart'
   export default class cart extends wepy.page {
-    data = {}
-
-    config = {}
-
-    methods = {
-
-    }
+    mixins = [mixinsCat]
   }
 
 </script>
 
 <style lang='less'>
+  .cart {
+    .empty {
+      text-align: center;
+
+      image {
+        height: 300rpx;
+        width: 300rpx;
+        margin: 20rpx;
+      }
+
+      view {
+        font-size: 40rpx;
+      }
+    }
+
+    .cart_list {
+      margin-bottom:50px;
+      .desc {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .price {
+          color: red;
+        }
+      }
+
+      .thumb {
+        display: flex;
+        align-items: center;
+
+        /* width: 115px; */
+        image {
+          height: 90px;
+          width: 90px;
+          margin-left: 5px;
+        }
+      }
+
+      .deleteShopMsg {
+        height: 100px;
+        background-color: red;
+        width: 65px;
+        line-height: 100px;
+        text-align: center;
+        color: aliceblue;
+      }
+    }
+
+    .van-card__thumb {
+      width: 115px;
+    }
+
+    .checkAll {
+        margin: 3px 0px 0px 20px;
+      }
+
+  }
 
 </style>
