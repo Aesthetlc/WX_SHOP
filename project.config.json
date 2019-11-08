@@ -80,6 +80,12 @@
 					"pathName": "pages/tabs/cart",
 					"query": "goods_id=57440",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "确认订单",
+					"pathName": "pages/order/index",
+					"scene": null
 				}
 			]
 		}

@@ -17,7 +17,8 @@
         'pages/tabs/search',
         'pages/tabs/my',
         'pages/goods_detail/index',
-        'pages/goods_list/index'
+        'pages/goods_list/index',
+        'pages/order/index'
       ],
       "usingComponents": {
         "van-sidebar": "./components/vant/sidebar/index",
@@ -38,7 +39,8 @@
         "van-stepper": "./components/vant/stepper/index",
         "van-checkbox": "./components/vant/checkbox/index",
         "van-swipe-cell": "./components/vant/swipe-cell/index",
-        "van-submit-bar": "./components/vant/submit-bar/index"
+        "van-submit-bar": "./components/vant/submit-bar/index",
+        "van-button": "./components/vant/button/index"
       },
       window: {
         backgroundTextStyle: 'light',
@@ -154,11 +156,30 @@
       this.seaveCart()
     }
 
-    // 本地化
+    // Cart信息本地化
     seaveCart() {
       wepy.setStorageSync('cart', this.globalData.cart)
+      this.setTabBarBadge()
     }
 
+    // 设置tobar右上角的数量小标
+    setTabBarBadge() {
+      let tobarNum = 0;
+      this.globalData.cart.forEach(item => {
+        if (item.isCheck) {
+          tobarNum += item.count
+        }
+      })
+      //setTabBarBadge 这个方法要注意一下：
+      /* index 参数为number类型
+      text 参数为String类型 */
+      wepy.setTabBarBadge({
+        index: 3,
+        text: tobarNum + ''
+      }).catch(err=>err)
+    }
+
+    // 全局的提示信息
     constructor() {
       super()
       this.use('requestfix')
@@ -194,8 +215,12 @@
         }
       });
     }
+
     onLaunch() {
+      // 页面初始化，从本地获取cart信息
       this.globalData.cart = wepy.getStorageSync('cart') || []
+      // 页面初始化，获取购物车右上角数字小标
+      this.setTabBarBadge()
     }
   }
 

@@ -30,7 +30,7 @@
         <view slot="right" class="deleteShopMsg" @tap="deleteShopMsg({{item.id}})">删除</view>
       </van-swipe-cell>
     </view>
-    <van-submit-bar price="{{ sumPrice }}" button-text="提交订单" bind:submit="onClickButton">
+    <van-submit-bar price="{{ sumPrice }}" button-text="提交订单" bind:submit="submitOrder">
       <van-checkbox custom-class="checkAll" value="{{ isFullCheck }}" bind:change="onChangeAllCheck">全选</van-checkbox>
     </van-submit-bar>
   </view>

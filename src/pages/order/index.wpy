@@ -1,0 +1,90 @@
+<template>
+  <view class="order">
+    <view class="checkAddress" wx:if="{{showAddress}}">
+      <van-button @tap="checkAddress" type="info" size="small">+选择收货地址</van-button>
+    </view>
+
+    <view class="addressMessage" wx:else>
+      <view class="peopleMsg">
+        <view class="name">收货人:{{ addressInfo.userName }}</view>
+        <view @tap="checkAddress" class="phone">联系电话:{{ addressInfo.telNumber }}
+          <van-icon name="arrow" />
+        </view>
+      </view>
+      <view>
+        <text>收货地址:{{ addressStr }}</text>
+      </view>
+    </view>
+
+    <image class="line" src="http://destiny001.gitee.io/image/cart_border.png" />
+
+    <van-card 
+      wx:for="{{cart}}"
+      wx:key="index"
+      num="{{item.count}}" 
+      price="{{item.price}}" 
+      title="{{item.name}}"
+      thumb="{{item.pic || 'http://destiny001.gitee.io/image/none.png'}}"
+      @tap="goGoodsDetail({{item.goods_id}})" />
+
+      <van-button custom-class="login" round type="info" open-type="getUserInfo" bindgetuserinfo="getUserInfo">登录</van-button>
+
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  import mixinsOrder from '@/mixins/order/index'
+  export default class Order extends wepy.page {
+    mixins = [mixinsOrder]
+    config = {
+      navigationBarTitleText: '确认订单'
+    }
+  }
+
+</script>
+
+<style lang='less'>
+  .order {
+    .checkAddress {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 150rpx;
+      width: 750rpx;
+    }
+
+    .line {
+      height: 20rpx;
+      width: 750rpx;
+    }
+
+    .addressMessage {
+      padding: 10rpx;
+
+      .peopleMsg {
+        display: flex;
+        justify-content: space-between;
+        font-size: 30rpx;
+        line-height: 60rpx;
+
+        .phone {
+          display: flex;
+          align-items: center;
+        }
+      }
+    }
+    .login{
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+    }
+  }
+
+  .van-icon,
+  .van-icon {
+    display: block !important;
+  }
+
+</style>

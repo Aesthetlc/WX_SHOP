@@ -38,6 +38,7 @@ export default class detail extends wepy.mixin {
   }
 
   computed = {
+    //格式化地址
     formatAddress() {
       if (this.address == null) {
         return "请选择收货地址"
@@ -51,6 +52,17 @@ export default class detail extends wepy.mixin {
         const result = provinceName + cityName + countyName + detailInfo
         return result
       }
+    },
+
+    //计算购物车右上角小标
+    sumCart(){
+      let sumCart=0;
+      this.$parent.globalData.cart.forEach(item=>{
+        if(item.isCheck){
+          sumCart += item.count 
+        }
+      })
+      return sumCart
     }
   }
 

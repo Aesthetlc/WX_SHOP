@@ -25,6 +25,16 @@ export default class cart extends wepy.mixin {
     //全选
     onChangeAllCheck(even) {
       this.$parent.checkToAll(even.detail)
+    },
+    //提交订单
+    submitOrder() {
+      if (this.sumPrice <= 0) {
+        wepy.baseShowToast('请选择商品')
+      } else {
+        wepy.navigateTo({
+          url: '/pages/order/index'
+        })
+      }
     }
   }
   computed = {
@@ -45,12 +55,16 @@ export default class cart extends wepy.mixin {
     },
 
     //全选 
-    isFullCheck(){
-       return this.cart.every(item=>item.isCheck)
+    isFullCheck() {
+      return this.cart.every(item => item.isCheck)
     }
   }
 
   onLoad() {
     this.cart = this.$parent.globalData.cart
+  }
+
+  onShow() {
+    this.$parent.setTabBarBadge()
   }
 }
